@@ -153,13 +153,13 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         println("Content: "+response.content)
+        println("Status: "+response.status)
 
 //        out.write(dataStr)
 //        out.close()
     }
 
 //    if ( response.status >= 200 && response.status < 300 ) {
-        println("Status: "+response.status)
 //        res = connection.inputStream.text
 //        try {
 //            return new groovy.json.JsonSlurperClassic().parseText(res)
