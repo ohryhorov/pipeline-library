@@ -137,9 +137,6 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         connection.setRequestProperty(header.key, header.value)
     }
     
-    println("Connection ${connection}")
-    println("DATA ${data}")
-
     if (data) {
         connection.setDoOutput(true)
         if (data instanceof String) {
@@ -152,11 +149,9 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("Header: ${headers}")
         println("DATASTR ${dataStr}")
 
-//        def response = httpRequest "http://10.10.0.128:6969/login", 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', requestBody: "${data}", url: "http://10.10.0.128:6969/login", 
-                                    customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy']]
-//,
-//                        customHeaders: ([ User-Agent: 'jenkins-groovy', Accept:'application/json'])
+                                    customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy'],
+                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         println("Status: "+response.status)
         println("Content: "+response.content)
