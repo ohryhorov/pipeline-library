@@ -151,7 +151,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("Header: ${headers}")
         println("DATASTR ${dataStr}")
 
-        def response = httpRequest "http://localhost:8080/jenkins/api/json?pretty=true"
+        def response = httpRequest "http://10.10.0.128:6969/login"
         println("Status: "+response.status)
         println("Content: "+response.content)
 
