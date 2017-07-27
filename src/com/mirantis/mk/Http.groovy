@@ -152,14 +152,14 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
                                     customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy']]
 //                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
-        println("Status: "+response.status)
         println("Content: "+response.content)
 
 //        out.write(dataStr)
 //        out.close()
     }
 
-//    if ( connection.responseCode >= 200 && connection.responseCode < 300 ) {
+    if ( response.status >= 200 && response.status < 300 ) {
+        println("Status: "+response.status)
 //        res = connection.inputStream.text
 //        try {
 //            return new groovy.json.JsonSlurperClassic().parseText(res)
@@ -168,7 +168,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //        }
 //    } else {
 //        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-//    }
+    }
 }
 
 /**
