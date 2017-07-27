@@ -35,7 +35,9 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
     for (header in headers) {
         connection.setRequestProperty(header.key, header.value)
     }
-echo "data"
+
+    println("DATA ${data}")
+
     if (data) {
         connection.setDoOutput(true)
         if (data instanceof String) {
