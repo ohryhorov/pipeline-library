@@ -155,6 +155,10 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("Content: "+response.content)
         println("Status: "+response.status)
         def resp = response.getStatus()
+    
+        if ( res >= 200 && res < 300 ) {
+            println("Status: "+response.status)
+        }
 //        out.write(dataStr)
 //        out.close()
     }
