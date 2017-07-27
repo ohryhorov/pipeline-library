@@ -152,15 +152,16 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("Header: ${headers}")
         println("DATASTR ${dataStr}")
 
-        def response = httpRequest "http://10.10.0.128:6969/login"
+//        def response = httpRequest "http://10.10.0.128:6969/login", 
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', url: "http://10.10.0.128:6969/login"
 //,
 //                        customHeaders: ([ User-Agent: 'jenkins-groovy', Accept:'application/json'])
 
         println("Status: "+response.status)
         println("Content: "+response.content)
 
-        out.write(dataStr)
-        out.close()
+//        out.write(dataStr)
+//        out.close()
     }
 
     if ( connection.responseCode >= 200 && connection.responseCode < 300 ) {
