@@ -153,7 +153,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("DATASTR ${dataStr}")
 
 //        def response = httpRequest "http://10.10.0.128:6969/login", 
-        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', url: "http://10.10.0.128:6969/login", 
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', requestBody: "${data}", url: "http://10.10.0.128:6969/login", 
                                     customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy']]
 //,
 //                        customHeaders: ([ User-Agent: 'jenkins-groovy', Accept:'application/json'])
