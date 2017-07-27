@@ -148,12 +148,11 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //        def out = new OutputStreamWriter(connection.outputStream) 
         println("DATASTR ${dataStr}")
 
-        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', requestBody: "${dataStr}", url: "${master.url}${uri}", 
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', requestBody: '{"username":"salt","password":"hovno12345!","eauth":"pam"}', url: "${master.url}${uri}", 
                                     customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy']]
 //                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         println("Status: "+response.status)
-        println("Status: "+response.requestBody)
         println("Content: "+response.content)
 
 //        out.write(dataStr)
