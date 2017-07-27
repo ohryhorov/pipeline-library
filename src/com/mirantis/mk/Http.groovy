@@ -154,7 +154,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 
         def response = httpRequest httpMode: 'GET',
                         url: "http://10.10.0.128:6969/login",
-                        customHeaders: [[ User-Agent: 'jenkins-groovy', Accept: 'application/json']]
+                        customHeaders: ([ User-Agent: 'jenkins-groovy', Accept: 'application/json'])
 
 /*        def response = httpRequest "http://10.10.0.128:6969/login"
         response.customHeaders('User-Agent', 'jenkins-groovy')
