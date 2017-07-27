@@ -150,6 +150,11 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         def out = new OutputStreamWriter(connection.outputStream)
         println("Header: ${headers}")
         println("DATASTR ${dataStr}")
+
+        def response = httpRequest "http://localhost:8080/jenkins/api/json?pretty=true"
+        println("Status: "+response.status)
+        println("Content: "+response.content)
+
         out.write(dataStr)
         out.close()
     }
