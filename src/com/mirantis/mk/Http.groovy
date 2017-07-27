@@ -138,6 +138,8 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
     for (header in headers) {
         connection.setRequestProperty(header.key, header.value)
     }
+    
+    println("DATA ${data}")
 
     if (data) {
         connection.setDoOutput(true)
