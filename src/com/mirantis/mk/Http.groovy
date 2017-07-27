@@ -149,8 +149,8 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("DATASTR ${dataStr}")
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'GET', requestBody: "${dataStr}", url: "${master.url}${uri}", 
-                                    customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy'],
-                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
+                                    customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy']]
+//                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         println("Status: "+response.status)
         println("Content: "+response.content)
