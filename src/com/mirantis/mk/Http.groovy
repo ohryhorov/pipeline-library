@@ -154,13 +154,13 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 
         println("Content: "+response.content)
         println("Status: "+response.status)
-
+        def resp = response.getStatus()
 //        out.write(dataStr)
 //        out.close()
     }
 
-    if ( response.getStatus() >= 200 && response.getStatus() < 300 ) {
-        println("Status: "+response.status)
+//    if ( response.getStatus() >= 200 && response.getStatus() < 300 ) {
+//        println("Status: "+response.status)
 //        res = connection.inputStream.text
 //        try {
 //            return new groovy.json.JsonSlurperClassic().parseText(res)
@@ -169,7 +169,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //        }
 //    } else {
 //        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-    }
+//    }
 }
 
 /**
