@@ -143,7 +143,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //            dataStr = data
 //        } else {
 //            connection.setRequestProperty('Content-Type', 'application/json')
-//            dataStr = new groovy.json.JsonBuilder(data).toString()
+            dataStr = new groovy.json.JsonBuilder(data).toString()
 //        }
 //        def out = new OutputStreamWriter(connection.outputStream) 
         println("DATASTR ${dataStr}")
