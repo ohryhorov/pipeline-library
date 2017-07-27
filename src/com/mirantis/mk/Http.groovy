@@ -153,6 +153,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         println("Status: "+response.status)
+        println("Status: "+response.requestBody)
         println("Content: "+response.content)
 
 //        out.write(dataStr)
