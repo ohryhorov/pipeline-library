@@ -137,6 +137,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         connection.setRequestProperty(header.key, header.value)
     }
     
+    println("Connection ${connection}")
     println("DATA ${data}")
 
     if (data) {
