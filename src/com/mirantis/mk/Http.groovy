@@ -148,7 +148,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
             dataStr = new groovy.json.JsonBuilder(data).toString()
         }
         def out = new OutputStreamWriter(connection.outputStream)
-        println("Header: ${header}")
+        println("Header: ${headers}")
         println("DATASTR ${dataStr}")
         out.write(dataStr)
         out.close()
