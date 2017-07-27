@@ -159,7 +159,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //        out.close()
     }
 
-//    if ( response.getStatus() >= 200 && response.getStatus() < 300 ) {
+    if ( res >= 200 && res < 300 ) {
 //        println("Status: "+response.status)
 //        res = connection.inputStream.text
 //        try {
@@ -169,7 +169,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //        }
 //    } else {
 //        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-//    }
+    }
 }
 
 /**
