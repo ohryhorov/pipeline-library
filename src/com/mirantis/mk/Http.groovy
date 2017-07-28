@@ -135,15 +135,14 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
     
     println customHttpHeaders
     if (data) {
-            dataStr = new groovy.json.JsonBuilder(data).toString()
-        println("DATASTR ${dataStr}")
+        dataStr = new groovy.json.JsonBuilder(data).toString()
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${master.url}${uri}", 
                                     customHeaders: customHttpHeaders
 
         def resp = response.getStatus()
     
-        if ( resp >= 100 && resp < 200 ) {
+        if ( resp >= 200 && resp < 300 ) {
             println("Status: "+response.status)
             println("Content: "+response.content)
             try {
@@ -156,17 +155,6 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         }
     }
 
-//    if ( resp >= 200 && resp < 300 ) {
-//        println("Status: "+response.status)
-//        res = connection.inputStream.text
-//        try {
-//            return new groovy.json.JsonSlurperClassic().parseText(res)
-//        } catch (Exception e) {
-//            return res
-//        }
-//    } else {
-//        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-//    }
 }
 
 /**
