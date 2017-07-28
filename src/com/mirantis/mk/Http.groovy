@@ -121,24 +121,17 @@ def sendHttpDeleteRequest(url, data = null, headers = [:]) {
  * @param headers   Map of additional request headers
  */
 def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
-//    def connection = new URL("${master.url}${uri}").openConnection()
 //    if (method != 'GET') {
 //        connection.setRequestMethod(method)
 //    }
 
-//    connection.setRequestProperty('User-Agent', 'jenkins-groovy')
-//    connection.setRequestProperty('Accept', 'application/json')
-//    if (master.authToken) {
-        // XXX: removeme
-//        connection.setRequestProperty('X-Auth-Token', master.authToken)
-//    }
-
-//    for (header in headers) {
-//        connection.setRequestProperty(header.key, header.value)
-//    }
-
     def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
-    println customHttpHeaders
+
+    def master.authToken = 'token'
+    if (master.authToken) {
+        // XXX: removeme
+        customHttpHeaders.add([[$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"]])
+    }
     
     if (data) {
             dataStr = new groovy.json.JsonBuilder(data).toString()
