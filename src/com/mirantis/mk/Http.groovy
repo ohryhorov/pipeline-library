@@ -138,16 +138,10 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //    }
 
     def customHttpHeaders = [name: 'User-Agent', value: 'jenkins-groovy']
+    println customHttpHeaders
     
     if (data) {
-//        connection.setDoOutput(true)
-//        if (data instanceof String) {
-//            dataStr = data
-//        } else {
-//            connection.setRequestProperty('Content-Type', 'application/json')
             dataStr = new groovy.json.JsonBuilder(data).toString()
-//        }
-//        def out = new OutputStreamWriter(connection.outputStream) 
         println("DATASTR ${dataStr}")
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${master.url}${uri}", 
