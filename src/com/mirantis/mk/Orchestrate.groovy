@@ -277,9 +277,9 @@ def installOpenstackCompute(master) {
     def salt = new com.mirantis.mk.Salt()
 
     // Configure compute nodes
-    retry(2) {
-        salt.runSaltProcessStep(master, 'I@nova:compute', 'state.highstate', ['exclude=opencontrail.client'], null, true)
-    }
+//    retry(2) {
+//        salt.runSaltProcessStep(master, 'I@nova:compute', 'state.highstate', ['exclude=opencontrail.client'], null, true)
+//    }
 }
 
 
