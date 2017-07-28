@@ -12,10 +12,15 @@ package com.mirantis.mk
  * @param method    HTTP method to use (default GET)
  * @param data      JSON data to POST or PUT
  * @param headers   Map of additional request headers
+ * @param read_timeout http session read timeout
  */
 @NonCPS
-def sendHttpRequest(url, method = 'GET', data = null, headers = [:]) {
+def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
     def connection = new URL(url).openConnection()
+
+    if (read_timeout != -1){
+        connection.setReadTimeout(read_timeout*1000)
+    }
     if (method != 'GET') {
         connection.setRequestMethod(method)
     }
@@ -80,9 +85,10 @@ def sendHttpGetRequest(url, data = null, headers = [:]) {
  *
  * @param url     URL which will requested
  * @param data    JSON data to PUT
+ * @param read_timeout http session read timeout
  */
-def sendHttpPostRequest(url, data = null, headers = [:]) {
-    return sendHttpRequest(url, 'POST', data, headers)
+def sendHttpPostRequest(url, data = null, headers = [:], read_timeout=-1) {
+    return sendHttpRequest(url, 'POST', data, headers, read_timeout)
 }
 
 /**
@@ -114,47 +120,61 @@ def sendHttpDeleteRequest(url, data = null, headers = [:]) {
  * @param data      JSON data to POST or PUT
  * @param headers   Map of additional request headers
  */
-@NonCPS
 def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
-    def connection = new URL("${master.url}${uri}").openConnection()
-    if (method != 'GET') {
-        connection.setRequestMethod(method)
-    }
+//    def connection = new URL("${master.url}${uri}").openConnection()
+//    if (method != 'GET') {
+//        connection.setRequestMethod(method)
+//    }
 
-    connection.setRequestProperty('User-Agent', 'jenkins-groovy')
-    connection.setRequestProperty('Accept', 'application/json')
-    if (master.authToken) {
+//    connection.setRequestProperty('User-Agent', 'jenkins-groovy')
+//    connection.setRequestProperty('Accept', 'application/json')
+//    if (master.authToken) {
         // XXX: removeme
-        connection.setRequestProperty('X-Auth-Token', master.authToken)
-    }
+//        connection.setRequestProperty('X-Auth-Token', master.authToken)
+//    }
 
-    for (header in headers) {
-        connection.setRequestProperty(header.key, header.value)
-    }
-
+//    for (header in headers) {
+//        connection.setRequestProperty(header.key, header.value)
+//    }
+    
     if (data) {
-        connection.setDoOutput(true)
-        if (data instanceof String) {
-            dataStr = data
-        } else {
-            connection.setRequestProperty('Content-Type', 'application/json')
+//        connection.setDoOutput(true)
+//        if (data instanceof String) {
+//            dataStr = data
+//        } else {
+//            connection.setRequestProperty('Content-Type', 'application/json')
             dataStr = new groovy.json.JsonBuilder(data).toString()
+//        }
+//        def out = new OutputStreamWriter(connection.outputStream) 
+        println("DATASTR ${dataStr}")
+
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${master.url}${uri}", 
+                                    customHeaders: [[name: 'User-Agent', value: 'jenkins-groovy']]
+//                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
+
+//        println("Content: "+response.content)
+//        println("Status: "+response.status)
+        def resp = response.getStatus()
+    
+        if ( resp >= 200 && resp < 300 ) {
+            println("Status: "+response.status)
+            println("Content: "+response.content)
         }
-        def out = new OutputStreamWriter(connection.outputStream)
-        out.write(dataStr)
-        out.close()
+//        out.write(dataStr)
+//        out.close()
     }
 
-    if ( connection.responseCode >= 200 && connection.responseCode < 300 ) {
-        res = connection.inputStream.text
-        try {
-            return new groovy.json.JsonSlurperClassic().parseText(res)
-        } catch (Exception e) {
-            return res
-        }
-    } else {
-        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-    }
+//    if ( resp >= 200 && resp < 300 ) {
+//        println("Status: "+response.status)
+//        res = connection.inputStream.text
+//        try {
+//            return new groovy.json.JsonSlurperClassic().parseText(res)
+//        } catch (Exception e) {
+//            return res
+//        }
+//    } else {
+//        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
+//    }
 }
 
 /**
