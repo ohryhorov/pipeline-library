@@ -130,7 +130,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //    def master.authToken = 'token'
 //    if (master.authToken) {
         // XXX: removeme
-        customHttpHeaders <<< new [[$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"]]
+        customHttpHeaders << new [[$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"]]
 //    }
     
     if (data) {
