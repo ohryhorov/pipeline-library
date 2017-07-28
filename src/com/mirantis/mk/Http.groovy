@@ -128,12 +128,10 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
     def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
     println customHttpHeaders
 
-//    def master.authToken = 'token'
-//    if (master.authToken) {
+    if (master.authToken) {
         // XXX: removeme
         customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"])
-// << new [name: 'X-Auth-Token', value: "${master.authToken}"]
-//    }
+    }
     
     println customHttpHeaders
     if (data) {
@@ -142,7 +140,6 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${master.url}${uri}", 
                                     customHeaders: customHttpHeaders
-//                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         def resp = response.getStatus()
     
@@ -154,6 +151,8 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
             } catch (Exception e) {
                 return response.content
             }
+        } else {
+            throw new Exception(resp + ": " + dataStr)
         }
     }
 
