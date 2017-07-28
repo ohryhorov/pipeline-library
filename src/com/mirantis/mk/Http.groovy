@@ -143,7 +143,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 
         def resp = response.getStatus()
     
-        if ( ponse.getStatus() = 100 && response.getStatus() < 200 ) {
+        if ( resp = 100 && resp < 200 ) {
             println("Status: "+response.status)
             println("Content: "+response.content)
             try {
@@ -152,7 +152,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
                 return response.content
             }
         } else {
-            throw new Exception(response.getStatus() + ": " + dataStr)
+            throw new Exception(res + ": " + dataStr)
         }
     }
 
