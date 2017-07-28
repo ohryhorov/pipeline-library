@@ -143,7 +143,6 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         def resp = response.getStatus()
     
         if ( resp >= 200 && resp < 300 ) {
-            println("Status: "+response.status)
             println("Content: "+response.content)
             try {
                 return new groovy.json.JsonSlurperClassic().parseText(response.content)
