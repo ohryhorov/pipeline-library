@@ -137,7 +137,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //        connection.setRequestProperty(header.key, header.value)
 //    }
 
-    def customHttpHeaders = [[$class: 'customHeaders', name: 'User-Agent', value: 'jenkins-groovy']]
+    def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
     println customHttpHeaders
     
     if (data) {
