@@ -131,7 +131,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //    def master.authToken = 'token'
 //    if (master.authToken) {
         // XXX: removeme
-        customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy'])
+        customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"])
 // << new [name: 'X-Auth-Token', value: "${master.authToken}"]
 //    }
     
