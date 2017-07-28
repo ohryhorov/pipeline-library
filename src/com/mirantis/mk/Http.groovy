@@ -151,7 +151,7 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
         println("DATASTR ${dataStr}")
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${master.url}${uri}", 
-                                    customHeaders: "${customHttpHeaders}"
+                                    customHeaders: customHttpHeaders
 //                                                    [name: 'X-Auth-Token', value: "${master.authToken}"]]
 
         def resp = response.getStatus()
