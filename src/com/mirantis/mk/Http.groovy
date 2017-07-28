@@ -127,11 +127,11 @@ def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 
     def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
 
-    def master.authToken = 'token'
-    if (master.authToken) {
+//    def master.authToken = 'token'
+//    if (master.authToken) {
         // XXX: removeme
         customHttpHeaders.add([[$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"]])
-    }
+//    }
     
     if (data) {
             dataStr = new groovy.json.JsonBuilder(data).toString()
