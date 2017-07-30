@@ -15,7 +15,7 @@ package com.mirantis.mk
  * @param read_timeout http session read timeout
  */
 @NonCPS
-def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
+def sendHttpRequestOriginal(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
     def connection = new URL(url).openConnection()
 
     if (read_timeout != -1){
@@ -60,6 +60,56 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
         }
         if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
             println("[HTTP] Response: code ${connection.responseCode}")
+        }
+        return response_content
+    } else {
+        if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
+            println("[HTTP] Response: code ${connection.responseCode}")
+        }
+        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
+    }
+}
+
+@NonCPS
+def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
+    
+    if (read_timeout != -1){
+        def requestTimeOut = read_timeout*1000
+    }
+    if (method != 'GET') {
+        def httpMethod = "${method}"
+    }
+    def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
+    if (data) {
+        customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: 'Content-Type', value: 'application/json'])
+    }
+    for (header in headers) {
+        customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: "${header.key}", value: "${header.value}"])
+    }    
+    
+//    println customHttpHeaders
+    if (data) {
+        dataStr = new groovy.json.JsonBuilder(data).toString()
+
+        if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
+            println("[HTTP] Request URL: ${url}, method: ${method}, headers: ${headers}, content: ${dataStr}")
+        }
+
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "$httpMethod", requestBody: "${dataStr}", url: "${master.url}${uri}", 
+                                    customHeaders: customHttpHeaders, timeout: requestTimeOut
+    }
+        
+    def resp = response.getStatus()
+
+    if ( resp == 200 ) {
+        response_ = response.content
+        try {
+            response_content = new groovy.json.JsonSlurperClassic().parseText(response_)
+        } catch (groovy.json.JsonException e) {
+            response_content = response_
+        }
+        if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
+            println("[HTTP] Response: code ${resp}")
         }
         return response_content
     } else {
