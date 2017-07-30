@@ -170,28 +170,75 @@ def sendHttpDeleteRequest(url, data = null, headers = [:]) {
  * @param data      JSON data to POST or PUT
  * @param headers   Map of additional request headers
  */
+def restCallOriginal(master, uri, method = 'GET', data = null, headers = [:]) {
+    def connection = new URL("${master.url}${uri}").openConnection()
+    if (method != 'GET') {
+        connection.setRequestMethod(method)
+    }
+
+    connection.setRequestProperty('User-Agent', 'jenkins-groovy')
+    connection.setRequestProperty('Accept', 'application/json')
+    if (master.authToken) {
+        // XXX: removeme
+        connection.setRequestProperty('X-Auth-Token', master.authToken)
+    }
+
+    for (header in headers) {
+        connection.setRequestProperty(header.key, header.value)
+    }
+
+    if (data) {
+        connection.setDoOutput(true)
+        if (data instanceof String) {
+            dataStr = data
+        } else {
+            connection.setRequestProperty('Content-Type', 'application/json')
+            dataStr = new groovy.json.JsonBuilder(data).toString()
+        }
+        def out = new OutputStreamWriter(connection.outputStream)
+        out.write(dataStr)
+        out.close()
+    }
+
+    if ( connection.responseCode >= 200 && connection.responseCode < 300 ) {
+        res = connection.inputStream.text
+        try {
+            return new groovy.json.JsonSlurperClassic().parseText(res)
+        } catch (Exception e) {
+            return res
+        }
+    } else {
+        throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
+    }
+}
+
 def restCall(master, uri, method = 'GET', data = null, headers = [:]) {
 //    if (method != 'GET') {
 //        connection.setRequestMethod(method)
 //    }
 
     def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
-    println customHttpHeaders
-
     if (master.authToken) {
         // XXX: removeme
         customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: 'X-Auth-Token', value: "${master.authToken}"])
     }
+    for (header in headers) {
+        customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: "${header.key}", value: "${header.value}"])
+    }
     
-    println customHttpHeaders
+//    println customHttpHeaders
     if (data) {
-        dataStr = new groovy.json.JsonBuilder(data).toString()
+        if (data instanceof String) {
+            dataStr = data
+        } else {
+//            customHttpHeaders.add([$class: 'HttpRequestNameValuePair', name: 'Content-Type', value: 'application/json'])    
+            dataStr = new groovy.json.JsonBuilder(data).toString()
+        }
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${master.url}${uri}", 
                                     customHeaders: customHttpHeaders
 
         def resp = response.getStatus()
-    
         if ( resp >= 200 && resp < 300 ) {
             println("Content: "+response.content)
             try {
