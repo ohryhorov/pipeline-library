@@ -73,9 +73,6 @@ def sendHttpRequestOriginal(url, method = 'GET', data = null, headers = [:], rea
 @NonCPS
 def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
     
-    if (read_timeout != -1){
-        requestTimeOut = read_timeout*1000
-    }
     if (method != 'GET') {
         httpMethod = "${method}"
     } else {
@@ -99,8 +96,15 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 
         println("method: ${url}")
 
-        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
-                                    customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
+        if (read_timeout != -1){
+            requestTimeOut = read_timeout*1000
+            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+                                        customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
+        } else {
+            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+                                        customHeaders: customHttpHeaders
+
+        }
     }
         
     def resp = response.getStatus()
