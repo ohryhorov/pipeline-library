@@ -111,13 +111,13 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 //    def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", customHeaders: customHttpHeaders
 //    println("Content: "+response.content)
 
-        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${url}", 
+        def response1 = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${url}", 
                                     customHeaders: customHttpHeaders
-    println("Content: "+response.content)
+    println("Content: "+response1.content)
         
-    def resp = response.getStatus()
+    def resp = response1.getStatus()
     println("RESP: ${resp}")
-    return new groovy.json.JsonSlurperClassic().parseText(response.content)
+    return new groovy.json.JsonSlurperClassic().parseText(response1.content)
 /*
     if ( resp == 200 ) {
         response_ = response.content
