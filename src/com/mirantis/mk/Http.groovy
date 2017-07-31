@@ -97,16 +97,15 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 
         if (read_timeout != -1){
             requestTimeOut = read_timeout*1000
-            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+            def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
         } else {
-            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+            def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders
-
         }
     }
 
-    def resp = response.getStatus()
+    resp = response.getStatus()
     println("RESP: ${resp}")
 
     if ( resp == 200 ) {
