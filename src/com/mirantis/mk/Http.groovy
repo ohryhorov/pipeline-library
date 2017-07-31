@@ -95,7 +95,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
             println("[HTTP] Request URL: ${url}, method: ${method}, headers: ${headers}, content: ${dataStr}")
         }
 
-        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "$httpMethod", requestBody: "${dataStr}", url: "${master.url}${uri}", 
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${master.url}${uri}", 
                                     customHeaders: customHttpHeaders, timeout: requestTimeOut
     }
         
