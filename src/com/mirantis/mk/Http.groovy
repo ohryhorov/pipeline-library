@@ -78,6 +78,8 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
     }
     if (method != 'GET') {
         def httpMethod = "${method}"
+    } else {
+        def httpMethod = 'GET'
     }
     def customHttpHeaders = [[$class: 'HttpRequestNameValuePair', name: 'User-Agent', value: 'jenkins-groovy']]
     if (data) {
