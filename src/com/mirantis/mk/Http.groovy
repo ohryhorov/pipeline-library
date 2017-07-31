@@ -94,7 +94,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
             println("[HTTP] Request URL: ${url}, method: ${method}, headers: ${headers}, content: ${dataStr}")
         }
 
-        println("method: ${url}")
+//        println("method: ${url}")
 
         if (read_timeout != -1){
             requestTimeOut = read_timeout*1000
@@ -119,6 +119,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
         if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
             println("[HTTP] Response: code ${resp}")
         }
+        println("response: ${response_content}")
         return response_content
     } else {
         if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
