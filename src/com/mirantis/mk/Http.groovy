@@ -106,10 +106,13 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 
         }
     }
+
+    println("Content: "+response.content)
         
     def resp = response.getStatus()
     println("RESP: ${resp}")
-
+    return response.content
+/*
     if ( resp == 200 ) {
         response_ = response.content
         println("RESP: ${response_}")
@@ -128,7 +131,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
             println("[HTTP] Response: code ${connection.responseCode}")
         }
         throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-    }
+    } */
 }
 
 /**
