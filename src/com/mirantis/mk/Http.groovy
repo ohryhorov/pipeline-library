@@ -95,29 +95,21 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 
 //        println("method: ${url}")
 
-//        if (read_timeout != -1){
-//            requestTimeOut = read_timeout*1000
-//            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
-//                                        customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
-//        } else {
-//            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
-//                                        customHeaders: customHttpHeaders
+        if (read_timeout != -1){
+            requestTimeOut = read_timeout*1000
+            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+                                        customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
+        } else {
+            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+                                        customHeaders: customHttpHeaders
 
-//        }
+        }
     }
 
-    println("DataStr: ${dataStr}")
-//    def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", customHeaders: customHttpHeaders
-//    println("Content: "+response.content)
-
-        def response1 = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${url}", 
-                                    customHeaders: customHttpHeaders
-    println("Content: "+response1.content)
-        
-    def resp = response1.getStatus()
+    def resp = response.getStatus()
     println("RESP: ${resp}")
-    return new groovy.json.JsonSlurperClassic().parseText(response1.content)
-/*
+    return new groovy.json.JsonSlurperClassic().parseText(response.content)
+
     if ( resp == 200 ) {
         response_ = response.content
         println("RESP: ${response_}")
@@ -136,7 +128,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
             println("[HTTP] Response: code ${connection.responseCode}")
         }
         throw new Exception(connection.responseCode + ": " + connection.inputStream.text)
-    } */
+    } 
 }
 
 /**
