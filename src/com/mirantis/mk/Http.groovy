@@ -111,6 +111,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 
     if ( resp == 200 ) {
         response_ = response.content
+        println("RESP: ${response_}")
         try {
             response_content = new groovy.json.JsonSlurperClassic().parseText(response_)
         } catch (groovy.json.JsonException e) {
