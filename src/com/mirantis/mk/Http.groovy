@@ -74,7 +74,7 @@ def sendHttpRequestOriginal(url, method = 'GET', data = null, headers = [:], rea
 def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
     
     if (read_timeout != -1){
-        def requestTimeOut = read_timeout*1000
+        requestTimeOut = read_timeout*1000
     }
     if (method != 'GET') {
         httpMethod = "${method}"
