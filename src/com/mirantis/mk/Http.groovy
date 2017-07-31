@@ -98,22 +98,19 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
             requestTimeOut = read_timeout*1000
             def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
-     resp = response.getStatus()
-        response_ = response.content
+            resp = response.getStatus()
+            response_ = response.content
         } else {
             def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders
-     resp = response.getStatus()
-        response_ = response.content
+            resp = response.getStatus()
+            response_ = response.content
         }
     }
 
     //def resp = response.getStatus()
-    println("RESP: ${resp}")
-    println("RESP1: ${response_}")
 
     if ( resp == 200 ) {
-        println("RESP2: ${response_}")
         try {
             response_content = new groovy.json.JsonSlurperClassic().parseText(response_)
         } catch (groovy.json.JsonException e) {
