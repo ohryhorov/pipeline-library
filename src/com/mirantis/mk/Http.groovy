@@ -96,15 +96,15 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
 
 //        println("method: ${url}")
 
-        if (read_timeout != -1){
-            requestTimeOut = read_timeout*1000
-            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
+//        if (read_timeout != -1){
+//            requestTimeOut = read_timeout*1000
+//            def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
-        } else {
+//        } else {
             def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders
 
-        }
+//        }
     }
 
     println("Content: "+response.content)
