@@ -108,6 +108,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
     }
         
     def resp = response.getStatus()
+    println("RESP: ${resp}")
 
     if ( resp == 200 ) {
         response_ = response.content
