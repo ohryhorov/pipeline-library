@@ -98,11 +98,11 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
             requestTimeOut = read_timeout*1000
             def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
-    def resp = response.getStatus()
+     resp = response.getStatus()
         } else {
             def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
                                         customHeaders: customHttpHeaders
-    def resp = response.getStatus()
+     resp = response.getStatus()
         }
     }
 
