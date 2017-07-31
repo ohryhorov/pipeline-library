@@ -100,7 +100,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
         println("method: ${url}")
 
         def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", 
-                                    customHeaders: customHttpHeaders, timeout: requestTimeOut
+                                    customHeaders: customHttpHeaders, timeout: "${requestTimeOut}"
     }
         
     def resp = response.getStatus()
