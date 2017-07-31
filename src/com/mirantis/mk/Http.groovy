@@ -119,7 +119,7 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
         if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
             println("[HTTP] Response: code ${resp}")
         }
-        println("response: ${response_content}")
+//        println("response: ${response_content}")
         return response_content
     } else {
         if(env.getEnvironment().containsKey('DEBUG') && env['DEBUG'] == "true"){
