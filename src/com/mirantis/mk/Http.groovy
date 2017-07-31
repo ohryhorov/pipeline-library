@@ -70,7 +70,6 @@ def sendHttpRequestOriginal(url, method = 'GET', data = null, headers = [:], rea
     }
 }
 
-@NonCPS
 def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeout=-1) {
     
     if (method != 'GET') {
