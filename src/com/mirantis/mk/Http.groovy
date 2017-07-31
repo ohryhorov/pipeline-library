@@ -108,7 +108,11 @@ def sendHttpRequest(url, method = 'GET', data = null, headers = [:], read_timeou
     }
 
     println("DataStr: ${dataStr}")
-    def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", customHeaders: customHttpHeaders
+//    def response = httpRequest acceptType: 'APPLICATION_JSON', httpMode: "${httpMethod}", requestBody: "${dataStr}", url: "${url}", customHeaders: customHttpHeaders
+//    println("Content: "+response.content)
+
+        def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON', httpMode: 'POST', requestBody: "${dataStr}", url: "${url}", 
+                                    customHeaders: customHttpHeaders
     println("Content: "+response.content)
         
     def resp = response.getStatus()
