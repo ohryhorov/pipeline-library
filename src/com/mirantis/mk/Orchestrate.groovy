@@ -177,6 +177,15 @@ def installOpenstackControl(master) {
         salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
     }
 
+    // Check whether glusterfs keystone volume credential-keys is mounted
+    def keystone_keys_dir = salt.getPillar(master, 'ctl01*','glusterfs:client:volumes:keystone-credential-keys:path')
+    retry(2) {
+        if (salt.testTarget(master, 'I@keystone:server')) {
+            salt.runSaltProcessStep(master, 'I@keystone:server', 'cmd.run', ["mount -l | grep ${keystone_keys_dir}"], null, true)
+        }
+        sleep(10)
+    }
+
     // Update fernet tokens before doing request on keystone server
     if (salt.testTarget(master, 'I@keystone:server')) {
         salt.enforceState(master, 'I@keystone:server', 'keystone.server', true)
