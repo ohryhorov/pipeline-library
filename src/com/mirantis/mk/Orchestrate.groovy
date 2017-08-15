@@ -184,11 +184,11 @@ def installOpenstackControl(master) {
     if(!keystone_keys_dir_pillar['return'].isEmpty()) {
         keystone_keys_dir = keystone_keys_dir_pillar['return'][0].values()[0]
     
-        retry(2) {
+        retry(3) {
             if (salt.testTarget(master, 'I@keystone:server')) {
                 salt.runSaltProcessStep(master, 'I@keystone:server', 'cmd.run', ["mount -l | grep ${keystone_keys_dir}"], null, true)
             }
-            sleep(20)
+//            sleep(20)
         }
     }
 
