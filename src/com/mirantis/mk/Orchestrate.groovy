@@ -148,15 +148,6 @@ def installOpenstackControl(master) {
         salt.enforceState(master, 'I@nginx:server', 'nginx', true)
     }
     
-    // Install glance and ensure glusterfs clusters
-    if (salt.testTarget(master, 'I@glance:server')) {
-        //runSaltProcessStep(master, 'I@glance:server', 'state.sls', ['glance.server'], 1)
-        salt.enforceState(master, 'I@glance:server and *01*', 'glance.server', true)
-       salt.enforceState(master, 'I@glance:server', 'glance.server', true)
-    }
-    if (salt.testTarget(master, 'I@glusterfs:client')) {
-        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
-    }
     
     // setup keystone service
     if (salt.testTarget(master, 'I@keystone:server')) {
@@ -170,6 +161,17 @@ def installOpenstackControl(master) {
         salt.runSaltProcessStep(master, 'I@keystone:server', 'service.restart', ['apache2'])
         sleep(30)
     }
+    
+    // Install glance and ensure glusterfs clusters
+    if (salt.testTarget(master, 'I@glance:server')) {
+        //runSaltProcessStep(master, 'I@glance:server', 'state.sls', ['glance.server'], 1)
+        salt.enforceState(master, 'I@glance:server and *01*', 'glance.server', true)
+       salt.enforceState(master, 'I@glance:server', 'glance.server', true)
+    }
+    if (salt.testTarget(master, 'I@glusterfs:client')) {
+        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
+    }
+    
     if (salt.testTarget(master, 'I@keystone:client')) {
         salt.enforceState(master, 'I@keystone:client and *01*', 'keystone.client', true)
         salt.enforceState(master, 'I@keystone:client', 'keystone.client', true)
