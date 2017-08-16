@@ -64,6 +64,11 @@ def installInfra(master) {
         salt.runSaltProcessStep(master, 'I@glusterfs:server', 'cmd.run', ['gluster peer status'], null, true)
         salt.runSaltProcessStep(master, 'I@glusterfs:server', 'cmd.run', ['gluster volume status'], null, true)
     }
+    
+    // Ensure glusterfs clusters
+    if (salt.testTarget(master, 'I@glusterfs:client')) {
+        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
+    }
 
     // Install galera
     if (salt.testTarget(master, 'I@galera:server') || salt.testTarget(master, 'I@galera:slave')) {
@@ -167,14 +172,11 @@ def installOpenstackControl(master) {
         salt.runSaltProcessStep(master, 'I@keystone:server', 'cmd.run', ['. /root/keystonercv3; openstack service list'], null, true)
     }
 
-    // Install glance and ensure glusterfs clusters
+    // Install glance  
     if (salt.testTarget(master, 'I@glance:server')) {
         //runSaltProcessStep(master, 'I@glance:server', 'state.sls', ['glance.server'], 1)
         salt.enforceState(master, 'I@glance:server and *01*', 'glance.server', true)
        salt.enforceState(master, 'I@glance:server', 'glance.server', true)
-    }
-    if (salt.testTarget(master, 'I@glusterfs:client')) {
-        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
     }
 
     // Update fernet tokens before doing request on keystone server
