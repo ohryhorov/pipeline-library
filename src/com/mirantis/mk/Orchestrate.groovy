@@ -167,13 +167,13 @@ def installOpenstackControl(master) {
         salt.enforceState(master, 'I@glance:server and *01*', 'glance.server', true)
        salt.enforceState(master, 'I@glance:server', 'glance.server', true)
     }
+    if (salt.testTarget(master, 'I@glusterfs:client')) {
+        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
+    }
 
     if (salt.testTarget(master, 'I@keystone:client')) {
         salt.enforceState(master, 'I@keystone:client and *01*', 'keystone.client', true)
         salt.enforceState(master, 'I@keystone:client', 'keystone.client', true)
-    }
-    if (salt.testTarget(master, 'I@glusterfs:client')) {
-        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
     }
 
     if (salt.testTarget(master, 'I@keystone:server')) {
