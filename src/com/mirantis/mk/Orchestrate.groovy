@@ -147,6 +147,11 @@ def installOpenstackControl(master) {
         salt.enforceState(master, 'I@nginx:server', 'nginx', true)
     }
 
+    // Ensure glusterfs clusters is ready
+    if (salt.testTarget(master, 'I@glusterfs:client')) {
+        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
+    }
+
     // setup keystone service
     if (salt.testTarget(master, 'I@keystone:server')) {
         //runSaltProcessStep(master, 'I@keystone:server', 'state.sls', ['keystone.server'], 1)
@@ -167,14 +172,11 @@ def installOpenstackControl(master) {
         salt.runSaltProcessStep(master, 'I@keystone:server', 'cmd.run', ['. /root/keystonercv3; openstack service list'], null, true)
     }
 
-    // Install glance and ensure glusterfs clusters
+    // Install glance
     if (salt.testTarget(master, 'I@glance:server')) {
         //runSaltProcessStep(master, 'I@glance:server', 'state.sls', ['glance.server'], 1)
         salt.enforceState(master, 'I@glance:server and *01*', 'glance.server', true)
        salt.enforceState(master, 'I@glance:server', 'glance.server', true)
-    }
-    if (salt.testTarget(master, 'I@glusterfs:client')) {
-        salt.enforceState(master, 'I@glusterfs:client', 'glusterfs.client', true)
     }
 
     // Update fernet tokens before doing request on keystone server
